@@ -1,0 +1,29 @@
+services:
+  mvc-app:
+    container_name: liftoff
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=liftoff;Username=postgres;Password=fcaf987"
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:16
+    container_name: meu-postgres
+    restart: always
+    environment:
+      POSTGRES_DB: liftoff
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: fcaf987
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
