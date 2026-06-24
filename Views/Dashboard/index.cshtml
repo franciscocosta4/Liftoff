@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Liftoff · Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0b0b0b;
+      color: #e8e8e8;
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.65rem 1.8rem;
+      border-radius: 40px;
+      font-weight: 500;
+      font-size: 0.95rem;
+      border: none;
+      background: #2a2a2a;
+      color: #f0f0f0;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      letter-spacing: 0.3px;
+    }
+    .btn-primary {
+      background: #1e3a5f;
+      color: white;
+      box-shadow: 0 0 0 1px #2a4a70 inset;
+    }
+    .btn-primary:hover {
+      background: #264d7a;
+      box-shadow: 0 0 0 1px #3a6a9a inset;
+    }
+    .btn-outline {
+      background: transparent;
+      box-shadow: 0 0 0 1px #4a4a4a inset;
+    }
+    .btn-outline:hover {
+      background: #1f1f1f;
+      box-shadow: 0 0 0 1px #6a6a6a inset;
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 2rem;
+      background: #0f0f0f;
+      border-bottom: 1px solid #222;
+    }
+    .logo {
+      font-weight: 600;
+      font-size: 1.4rem;
+      letter-spacing: -0.5px;
+      color: white;
+    }
+    .logo span {
+      color: #4c7eb0;
+    }
+    .nav-links {
+      display: flex;
+      gap: 1.8rem;
+      align-items: center;
+    }
+    .nav-links a {
+      color: #b0b0b0;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover {
+      color: white;
+    }
+    .dash-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: #0f0f0f;
+      border-bottom: 1px solid #1f1f1f;
+    }
+    .dash-header .logo {
+      font-size: 1.2rem;
+    }
+    .dash-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    .dash-actions .badge {
+      background: #1e2a3a;
+      padding: 0.3rem 0.9rem;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      color: #b0c8e0;
+    }
+    .map-wrapper {
+      flex: 1;
+      width: 100%;
+      background: #0e0e0e;
+      position: relative;
+      min-height: 500px;
+    }
+    #map {
+      width: 100%;
+      height: 100%;
+      min-height: 500px;
+      background: #101010;
+    }
+    .plane-overlay {
+      position: absolute;
+      bottom: 2rem;
+      left: 2rem;
+      background: rgba(10,10,10,0.7);
+      backdrop-filter: blur(4px);
+      padding: 0.8rem 1.5rem;
+      border-radius: 60px;
+      border: 1px solid #2a2a2a;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      color: #ccc;
+      pointer-events: none;
+    }
+    .plane-overlay i {
+      color: #5c8ec0;
+    }
+    .dash-footer {
+      background: #0f0f0f;
+      border-top: 1px solid #1f1f1f;
+      padding: 0.8rem 2rem;
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+      color: #aaa;
+    }
+    .dash-footer i {
+      color: #4c7eb0;
+      margin-right: 0.3rem;
+    }
+    .leaflet-tile-pane {
+      filter: invert(1) hue-rotate(180deg) brightness(0.7) saturate(0.4);
+    }
+    .leaflet-control-zoom {
+      filter: invert(1) brightness(0.8);
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="logo">Liftoff<span>.</span></div>
+    <div class="nav-links">
+      <a href="index.html">Início</a>
+      <a href="login.html">Entrar</a>
+      <a href="register.html">Registo</a>
+      <a href="dashboard.html" class="btn btn-primary" style="padding:0.4rem 1.2rem;">Dashboard</a>
+    </div>
+  </nav>
+
+  <div class="dash-header">
+    <div class="logo">Liftoff<span>.</span></div>
+    <div class="dash-actions">
+      <span class="badge"><i class="fas fa-circle" style="color:#5c8ec0;font-size:0.5rem;"></i> 3 utilizadores</span>
+      <span class="badge">LPPT · 12:34</span>
+      <button class="btn btn-outline" style="padding:0.2rem 1rem;font-size:0.8rem;">Sair</button>
+    </div>
+  </div>
+
+  <div class="map-wrapper">
+    <div id="map"></div>
+    <div class="plane-overlay">
+      <i class="fas fa-plane"></i> 6 aeronaves ativas · ETA estimado
+    </div>
+  </div>
+
+  <div class="dash-footer">
+    <span><i class="fas fa-map-pin"></i> Aeroporto: LPPR</span>
+    <span><i class="fas fa-clock"></i> Próxima atualização: 5s</span>
+    <span><i class="fas fa-users"></i> Lugares ocupados: 4 / 12</span>
+  </div>
+
+  <script>
+    (function() {
+      const mapContainer = document.getElementById('map');
+      if (!mapContainer) return;
+
+      const map = L.map('map', {
+        center: [39.5, -8.0],
+        zoom: 5,
+        zoomControl: true,
+        fadeAnimation: true,
+        attributionControl: true
+      });
+
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; CartoDB'
+      }).addTo(map);
+
+      const planeIcon = L.divIcon({
+        className: 'plane-marker',
+        html: '✈',
+        iconSize: [24, 24],
+        iconAnchor: [12, 12],
+        popupAnchor: [0, -10]
+      });
+
+      const positions = [
+        [41.15, -8.6], [40.2, -9.0], [38.7, -9.1],
+        [39.8, -8.2], [42.0, -8.5], [37.0, -7.9]
+      ];
+      positions.forEach(pos => {
+        L.marker(pos, { icon: planeIcon })
+          .addTo(map)
+          .bindPopup('Aeronave · ETA 12min');
+      });
+
+      L.circle([41.235, -8.681], {
+        color: '#4c7eb0',
+        fillColor: '#1e3a5f',
+        fillOpacity: 0.2,
+        radius: 25000
+      }).addTo(map).bindPopup('Aeroporto Francisco Sá Carneiro');
+
+      setTimeout(() => {
+        if (map) map.invalidateSize();
+      }, 300);
+    })();
+  </script>
+</body>
+</html>

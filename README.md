@@ -206,6 +206,24 @@ O tempo até aterragem é calculado internamente com base em:
 
 ## Executar o projeto
 
+### Local (.net)
+
+```bash
+dotnet watch run
+```
+
+A aplicação ficará disponível em:
+
+[http://localhost:8080](http://localhost:8080)
+
+### Atenção: 
+antes de rodar localmente, passar:
+  "DefaultConnection": "Host=postegres;Port=5432;Database=liftoff;Username=postgres;Password=fcaf987"
+para: 
+  "DefaultConnection": "Host=localhost;Port=5432;Database=liftoff;Username=postgres;Password=fcaf987"~
+em appsettings.json 
+---
+
 ### Docker (recomendado)
 
 ```bash

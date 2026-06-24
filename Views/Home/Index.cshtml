@@ -1,8 +1,395 @@
-﻿@{
+﻿@* @{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+</div> *@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Liftoff · Estudo Imersivo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+    href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
+    rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <!-- CSS local (não bloqueante) -->
+    <link rel="preload" as="style" href="~/css/landing.css" onload="this.rel='stylesheet'">
+
+    <noscript>
+        <link rel="stylesheet" href="~/css/landing.css">
+    </noscript>
+
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="logo">Liftoff<span>.</span></div>
+        <div class="nav-links">
+            <a href="index.html">Início</a>
+            <a href="login.html">Entrar</a>
+            <a href="register.html">Registo</a>
+            <a href="dashboard.html" class="btn btn-primary" style="padding:0.4rem 1.2rem;">Dashboard</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1 class="hero-title">Liftoff</h1>
+        <p class="hero-sub">Sessões de estudo imersivas · mapa de lugares em tempo real · voo colaborativo</p>
+        <div class="hero-buttons">
+            <a href="login.html" class="btn btn-primary">Iniciar sessão</a>
+            <a href="register.html" class="btn btn-outline">Criar conta</a>
+            <a href="dashboard.html" class="btn btn-ghost">Dashboard</a>
+        </div>
+    </section>
+
+    <div class="globe-wrapper">
+        <div id="globe-container"></div>
+    </div>
+
+    <div class="info-grid">
+        <div class="info-item">
+            <i class="fas fa-plane-departure"></i>
+            <h4>Estudo imersivo</h4>
+            <p>Ambiente de cabine com sons e temporizador sincronizado.</p>
+        </div>
+        <div class="info-item">
+            <i class="fas fa-map-marked-alt"></i>
+            <h4>Mapa em tempo real</h4>
+            <p>Escolha o seu lugar e veja quem está a bordo.</p>
+        </div>
+        <div class="info-item">
+            <i class="fas fa-users"></i>
+            <h4>Presença social</h4>
+            <p>Estude com outros, veja o progresso coletivo.</p>
+        </div>
+        <div class="info-item">
+            <i class="fas fa-chart-line"></i>
+            <h4>Tracking de voo</h4>
+            <p>ETA estimado e posição de aeronaves (OpenSky).</p>
+        </div>
+    </div><!-- Three.js e ThreeGlobe -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three-globe@2.24.9/dist/three-globe.min.js"></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script>
+        (function () {
+
+        const container = document.getElementById('globe-container');
+
+        if (!container) return;
+
+
+        // =========================
+        // DIMENSÕES
+        // =========================
+
+        const width = container.clientWidth || window.innerWidth;
+        const height = container.clientHeight || 380;
+
+
+        // =========================
+        // CENA
+        // =========================
+
+        const scene = new THREE.Scene();
+
+        scene.background = new THREE.Color(0x0b0b0b);
+
+
+
+        // =========================
+        // CÂMARA
+        // =========================
+
+        const camera = new THREE.PerspectiveCamera(
+        45,
+        width / height,
+        0.1,
+        2000
+        );
+
+        // O ThreeGlobe usa escala ~100
+        camera.position.set(0, 0, 320);
+
+
+
+        // =========================
+        // RENDERER
+        // =========================
+
+        const renderer = new THREE.WebGLRenderer({
+        antialias: true,
+        alpha: false
+        });
+
+        renderer.setSize(width, height);
+
+        renderer.setPixelRatio(
+        Math.min(window.devicePixelRatio, 2)
+        );
+
+        renderer.setClearColor(0x0b0b0b, 1);
+
+        container.appendChild(renderer.domElement);
+
+
+
+        // =========================
+        // CONTROLOS
+        // =========================
+
+        const controls = new THREE.OrbitControls(
+        camera,
+        renderer.domElement
+        );
+
+        controls.enableDamping = true;
+        controls.enablePan = false;
+        controls.minDistance = 150;
+        controls.maxDistance = 500;
+
+
+
+        // =========================
+        // GLOBO
+        // =========================
+
+        <!-- const globe = new ThreeGlobe() -->
+
+        < !-- .globeImageUrl(-->
+        < !-- 'https://unpkg.com/three-globe@2.24.9/example/img/earth-blue-marble.jpg' -->
+        < !-- ) -->
+
+        < !-- .bumpImageUrl(-->
+        < !-- 'https://unpkg.com/three-globe@2.24.9/example/img/earth-topology.png' -->
+        < !-- ) -->
+
+        < !-- .showAtmosphere(true) -->
+
+        < !-- .atmosphereColor('#3a6a9a') -->
+
+        < !-- .atmosphereAltitude(0.3); -->
+	
+        const globe = new ThreeGlobe()
+        .globeMaterial(
+        new THREE.MeshPhongMaterial({
+        color: 0x111827,
+        emissive: 0x050b14,
+        shininess: 15
+        })
+        )
+        .showAtmosphere(true)
+        .atmosphereColor('#315b8a')
+        .atmosphereAltitude(0.25);
+        // =========================
+        // AVIÕES
+        // =========================
+
+        const planePositions = [
+
+        { lat: 40.7, lng: -74.0, color: '#b0c8e0' },
+        { lat: 51.5, lng: -0.1, color: '#8ab8e0' },
+        { lat: 48.8, lng: 2.3, color: '#7aaac0' },
+        { lat: 41.3, lng: 2.0, color: '#6a9ac0' },
+        { lat: 55.7, lng: 37.6, color: '#5c8ec0' },
+        { lat: 22.3, lng: 114.1, color: '#4c7eb0' },
+        { lat: -23.5, lng: -46.6, color: '#3a6a9a' },
+        { lat: 34.0, lng: -118.2, color: '#7ab0d0' },
+        { lat: 28.6, lng: 77.2, color: '#6a9ac0' },
+        { lat: -33.9, lng: 151.2, color: '#5a8ab0' }
+
+        ];
+
+
+        const canvas = document.createElement('canvas');
+
+        canvas.width = 64;
+        canvas.height = 64;
+
+
+        const ctx = canvas.getContext('2d');
+
+        ctx.font = '42px sans-serif';
+
+        ctx.textAlign = 'center';
+
+        ctx.textBaseline = 'middle';
+
+        ctx.fillStyle = '#ffffff';
+
+        ctx.fillText('✈', 32, 34);
+
+
+        const texture = new THREE.CanvasTexture(canvas);
+
+
+        const planeGroup = new THREE.Group();
+
+
+        planePositions.forEach(p => {
+
+
+        const material = new THREE.SpriteMaterial({
+
+        map: texture,
+
+        transparent: true,
+
+        color: new THREE.Color(p.color),
+
+        depthTest: false,
+
+        depthWrite: false
+
+        });
+
+
+
+        const sprite = new THREE.Sprite(material);
+
+
+
+        const phi =
+        (90 - p.lat) * Math.PI / 180;
+
+
+        const theta =
+        (p.lng + 180) * Math.PI / 180;
+
+
+        // raio real do ThreeGlobe
+        const radius = 102;
+
+
+        sprite.position.set(
+
+        radius *
+        Math.sin(phi) *
+        Math.cos(theta),
+
+        radius *
+        Math.cos(phi),
+
+        radius *
+        Math.sin(phi) *
+        Math.sin(theta)
+
+        );
+
+
+        sprite.scale.set(12, 12, 1);
+
+
+        planeGroup.add(sprite);
+
+
+        });
+
+
+
+        // =========================
+        // GRUPO PRINCIPAL
+        // =========================
+
+        const globeGroup = new THREE.Group();
+
+
+        globeGroup.add(globe);
+
+        globeGroup.add(planeGroup);
+
+
+        scene.add(globeGroup);
+
+
+
+        // =========================
+        // ILUMINAÇÃO
+        // =========================
+
+        scene.add(
+        new THREE.AmbientLight(0x404060)
+        );
+
+
+        const light = new THREE.DirectionalLight(
+        0xffffff,
+        1.5
+        );
+
+        light.position.set(1, 1, 1);
+
+        scene.add(light);
+
+
+
+        // =========================
+        // ANIMAÇÃO
+        // =========================
+
+        function animate() {
+
+        requestAnimationFrame(animate);
+
+
+        globeGroup.rotation.y += 0.002;
+
+
+        controls.update();
+
+
+        renderer.render(
+        scene,
+        camera
+        );
+
+        }
+
+
+        animate();
+
+
+
+        // =========================
+        // RESIZE
+        // =========================
+
+        function resizeRenderer() {
+
+        const w = container.clientWidth;
+
+        const h = container.clientHeight;
+
+
+        camera.aspect = w / h;
+
+        camera.updateProjectionMatrix();
+
+
+        renderer.setSize(
+        w,
+        h
+        );
+
+        }
+
+
+        window.addEventListener(
+        'resize',
+        resizeRenderer
+        );
+
+
+        })();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Liftoff · Registo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0b0b0b;
+      color: #e8e8e8;
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.65rem 1.8rem;
+      border-radius: 40px;
+      font-weight: 500;
+      font-size: 0.95rem;
+      border: none;
+      background: #2a2a2a;
+      color: #f0f0f0;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      letter-spacing: 0.3px;
+    }
+    .btn-primary {
+      background: #1e3a5f;
+      color: white;
+      box-shadow: 0 0 0 1px #2a4a70 inset;
+    }
+    .btn-primary:hover {
+      background: #264d7a;
+      box-shadow: 0 0 0 1px #3a6a9a inset;
+    }
+    .auth-card {
+      background: #141414;
+      border: 1px solid #2a2a2a;
+      border-radius: 28px;
+      padding: 2.8rem 2.5rem;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 20px 40px -15px rgba(0,0,0,0.8);
+    }
+    .auth-card h2 {
+      font-weight: 600;
+      font-size: 1.8rem;
+      margin-bottom: 0.4rem;
+    }
+    .auth-card .sub {
+      color: #999;
+      margin-bottom: 2rem;
+      font-size: 0.95rem;
+    }
+    .input-group {
+      margin-bottom: 1.2rem;
+    }
+    .input-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #ccc;
+      margin-bottom: 0.3rem;
+    }
+    .input-group input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: #1e1e1e;
+      border: 1px solid #333;
+      border-radius: 12px;
+      color: white;
+      font-size: 0.95rem;
+      transition: border 0.2s;
+    }
+    .input-group input:focus {
+      outline: none;
+      border-color: #3a6a9a;
+      background: #242424;
+    }
+    .auth-card .btn {
+      width: 100%;
+      justify-content: center;
+      padding: 0.8rem;
+      margin-top: 0.5rem;
+    }
+    .auth-footer {
+      margin-top: 1.8rem;
+      text-align: center;
+      color: #999;
+      font-size: 0.9rem;
+    }
+    .auth-footer a {
+      color: #6a9ac0;
+      font-weight: 500;
+    }
+    .auth-footer a:hover {
+      color: #8ab8e0;
+    }
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 2rem;
+      background: #0f0f0f;
+      border-bottom: 1px solid #222;
+      z-index: 10;
+    }
+    .logo {
+      font-weight: 600;
+      font-size: 1.4rem;
+      letter-spacing: -0.5px;
+      color: white;
+    }
+    .logo span {
+      color: #4c7eb0;
+    }
+    .nav-links {
+      display: flex;
+      gap: 1.8rem;
+      align-items: center;
+    }
+    .nav-links a {
+      color: #b0b0b0;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover {
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="logo">Liftoff<span>.</span></div>
+    <div class="nav-links">
+      <a href="index.html">Início</a>
+      <a href="login.html">Entrar</a>
+      <a href="register.html">Registo</a>
+      <a href="dashboard.html" class="btn btn-primary" style="padding:0.4rem 1.2rem;">Dashboard</a>
+    </div>
+  </nav>
+
+  <div class="auth-card">
+    <h2>Criar conta</h2>
+    <p class="sub">Comece a sua viagem de estudo</p>
+    <div class="input-group">
+      <label>Nome</label>
+      <input type="text" placeholder="João Silva" />
+    </div>
+    <div class="input-group">
+      <label>Email</label>
+      <input type="email" placeholder="seu@email.com" />
+    </div>
+    <div class="input-group">
+      <label>Palavra-passe</label>
+      <input type="password" placeholder="mínimo 8 caracteres" />
+    </div>
+    <button class="btn btn-primary">Registar</button>
+    <div class="auth-footer">
+      Já tem conta? <a href="login.html">Entrar</a>
+    </div>
+  </div>
+
+</body>
+</html>

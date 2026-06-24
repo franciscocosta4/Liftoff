@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Liftoff")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+80b942504e91daa4c9a7140c6e24f96910210901")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5c260025adb434356e0b69037b84543b8c154538")]
 [assembly: System.Reflection.AssemblyProductAttribute("Liftoff")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Liftoff")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
